@@ -54,15 +54,14 @@ export function useIncomingEventRow({
     data: descriptionProp ?? "",
   });
 
+  const [remoteDescription, setRemoteDescription] = useState(null);
+
   useSubscription(subscriptionGraphql, {
     variables: { id: event.id },
     onSubscriptionData({ subscriptionData }) {
-      if (!isSelected) {
-        setIsUpdated(true);
-        setDescriptionValue(
-          subscriptionData.data.eventDescriptionUpdated.description
-        );
-      }
+      setRemoteDescription(
+        subscriptionData.data.eventDescriptionUpdated.description
+      );
     },
   });
 
@@ -116,6 +115,13 @@ export function useIncomingEventRow({
       setIsUpdated(true);
     }
   }, [cookies, event.id, descriptionProp, setCookie]);
+
+  useEffect(() => {
+    if (!isSelected && remoteDescription) {
+      setDescriptionValue(remoteDescription);
+    }
+  }, [isSelected, remoteDescription]);
+
   return {
     ...event,
     descriptionValue,
