@@ -1,5 +1,6 @@
 import React from "react";
 import styled, { css } from "styled-components";
+import { Dot } from "../../shared-ui";
 import { bind } from "../../utils-structure";
 import { useCalendarItem } from "./useCalendarItem";
 
@@ -59,17 +60,4 @@ const Date = styled.b<{ isToday: boolean; isPast: boolean }>`
         z-index: -1;
       }
     `}
-`;
-
-const Dot = styled.div`
-  display: inline-block;
-  width: 7px;
-  height: 7px;
-  border-radius: 50%;
-  background-color: #ff5600;
-  margin-right: 1px;
-
-  &:last-child {
-    margin-right: 0;
-  }
 `;

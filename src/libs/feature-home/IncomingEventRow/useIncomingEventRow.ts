@@ -1,5 +1,6 @@
 import { gql, useMutation, useSubscription } from "@apollo/client";
 import { useEffect, useRef, useState } from "react";
+import { useCookies } from "react-cookie";
 
 type Event = {
   id: string;
@@ -44,6 +45,9 @@ export function useIncomingEventRow({
   const [descriptionValue, setDescriptionValue] = useState(
     descriptionProp ?? ""
   );
+  const [isUpdated, setIsUpdated] = useState(false);
+
+  const [cookies, setCookie] = useCookies([event.id]);
 
   const debounceRef = useRef<{ timer: NodeJS.Timeout | null; data: string }>({
     timer: null,
@@ -53,9 +57,12 @@ export function useIncomingEventRow({
   useSubscription(subscriptionGraphql, {
     variables: { id: event.id },
     onSubscriptionData({ subscriptionData }) {
-      setDescriptionValue(
-        subscriptionData.data.eventDescriptionUpdated.description
-      );
+      if (!isSelected) {
+        setIsUpdated(true);
+        setDescriptionValue(
+          subscriptionData.data.eventDescriptionUpdated.description
+        );
+      }
     },
   });
 
@@ -65,10 +72,19 @@ export function useIncomingEventRow({
   >(mutationGraphql, {
     onCompleted(data) {
       debounceRef.current.data = data.updateEventDescription.description;
+      setCookie(
+        data.updateEventDescription.id,
+        data.updateEventDescription.description
+      );
     },
   });
 
   const toggleOpenDialog = () => {
+    if (!isSelected && isUpdated) {
+      setIsUpdated(false);
+      setCookie(event.id, descriptionProp ?? "");
+    }
+
     setIsSelected(!isSelected);
   };
 
@@ -78,7 +94,7 @@ export function useIncomingEventRow({
   };
 
   useEffect(() => {
-    if (!descriptionValue || debounceRef.current.data === descriptionValue) {
+    if (debounceRef.current.data === descriptionValue) {
       return;
     }
 
@@ -93,11 +109,19 @@ export function useIncomingEventRow({
     }, 500);
   }, [event.id, descriptionValue, updateEventDescriptionMutation]);
 
+  useEffect(() => {
+    const localDescription = cookies[event.id];
+
+    if (localDescription !== (descriptionProp ?? "")) {
+      setIsUpdated(true);
+    }
+  }, [cookies, event.id, descriptionProp, setCookie]);
   return {
     ...event,
     descriptionValue,
     saveDescription,
     isSelected,
     toggleOpenDialog,
+    isUpdated,
   };
 }

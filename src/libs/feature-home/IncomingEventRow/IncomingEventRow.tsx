@@ -1,5 +1,6 @@
 import { differenceInCalendarDays, format, isToday } from "date-fns";
 import styled, { css } from "styled-components";
+import { Dot } from "../../shared-ui";
 import { bind } from "../../utils-structure";
 import { useIncomingEventRow } from "./useIncomingEventRow";
 
@@ -12,20 +13,27 @@ export const IncomingEventRow = bind(
     reservedAt,
     isSelected,
     toggleOpenDialog,
+    isUpdated,
   }) => {
     return (
       <EventRow selected={isSelected}>
         <Header onClick={toggleOpenDialog}>
-          <DayCounter highlight={isToday(new Date(reservedAt))}>
-            {isSelected
-              ? `${format(new Date(reservedAt), "yy년 M월 d일")}`
-              : `D-${
-                  differenceInCalendarDays(new Date(reservedAt), new Date())
-                    ? differenceInCalendarDays(new Date(reservedAt), new Date())
-                    : "day"
-                }`}
-          </DayCounter>
-          <EventTitle>{title}</EventTitle>
+          <HeaderTitle>
+            <DayCounter highlight={isToday(new Date(reservedAt))}>
+              {isSelected
+                ? `${format(new Date(reservedAt), "yy년 M월 d일")}`
+                : `D-${
+                    differenceInCalendarDays(new Date(reservedAt), new Date())
+                      ? differenceInCalendarDays(
+                          new Date(reservedAt),
+                          new Date()
+                        )
+                      : "day"
+                  }`}
+            </DayCounter>
+            <EventTitle>{title}</EventTitle>
+          </HeaderTitle>
+          {isUpdated && <Dot />}
         </Header>
         {isSelected && (
           <Content>
@@ -74,7 +82,13 @@ const Header = styled.div`
   display: flex;
   width: 100%;
   cursor: pointer;
+  align-items: center;
+  justify-content: space-between;
   padding: 20px 15px;
+`;
+
+const HeaderTitle = styled.div`
+  display: flex;
 `;
 
 const Content = styled.div`
