@@ -74,7 +74,7 @@ const EventRow = styled.li<{ selected: boolean }>`
     props.selected &&
     css`
       border-color: rgb(200, 200, 200);
-      height: 200px;
+      height: 150px;
     `}
 `;
 
@@ -117,7 +117,7 @@ const DescriptionInput = styled.textarea`
   resize: none;
   width: 100%;
   font-size: 14px;
-  line-height: 1.8;
+  line-height: 1.7;
   color: #757575;
   outline: none;
   flex: 1;
