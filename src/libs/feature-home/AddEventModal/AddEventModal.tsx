@@ -1,5 +1,5 @@
 import styled, { keyframes } from "styled-components";
-import { Body, Title } from "../../shared-ui";
+import { Title } from "../../shared-ui";
 import { bind } from "../../utils-structure";
 import { PlusButton } from "../PlusButton";
 import { useAddEventModal } from "./useAddEventModal";
@@ -8,7 +8,7 @@ export const AddEventModal = bind(
   useAddEventModal,
   ({
     opened,
-    onClose,
+    closeModal,
     addEvent,
     titleValue,
     setTitleValue,
@@ -23,16 +23,16 @@ export const AddEventModal = bind(
     }
     return (
       <>
-        <Overlay onClick={onClose} />
+        <Overlay onClick={closeModal} />
         <Modal>
-          <Title level={3} color="black" className="mb-40">
+          <Title level={2} color="black" className="mb-40">
             새로운 일정 등록하기
           </Title>
 
           <Label className="mb-30">
-            <Body color="black" weight="bold">
+            <Title level={3} className="mb-10" color="black" weight="bold">
               일정 타이틀
-            </Body>
+            </Title>
             <Input
               type="text"
               value={titleValue}
@@ -41,9 +41,9 @@ export const AddEventModal = bind(
           </Label>
 
           <Label className="mb-30">
-            <Body color="black" weight="bold">
+            <Title level={3} className="mb-10" color="black" weight="bold">
               일정 날짜
-            </Body>
+            </Title>
             <Input
               type="date"
               value={reservedAtValue}
@@ -52,9 +52,9 @@ export const AddEventModal = bind(
           </Label>
 
           <Label className="mb-40">
-            <Body color="black" weight="bold">
+            <Title level={3} className="mb-10" color="black" weight="bold">
               일정 설명
-            </Body>
+            </Title>
             <Input
               type="text"
               value={descriptionValue}
@@ -108,10 +108,10 @@ const Label = styled.label`
 
 const Input = styled.input`
   width: 100%;
-  font-size: 14px;
+  font-size: 16px;
   border: 0;
   border-bottom: 1px solid #eee;
   outline: none;
-  padding: 10px 0;
+  padding: 0 0 10px;
   color: #757575;
 `;

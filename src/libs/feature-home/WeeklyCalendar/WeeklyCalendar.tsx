@@ -8,7 +8,7 @@ export const WeeklyCalendar = bind(
   useWeeklyCalendar,
   ({ loading, error, calendarList }) => {
     if (loading) {
-      return <Skeleton className="mb-60" width="100%" height={58} />;
+      return <Skeleton className="mb-40" width="100%" height={79} />;
     }
 
     if (error || !calendarList) {
@@ -16,7 +16,7 @@ export const WeeklyCalendar = bind(
     }
 
     return (
-      <Container className="mb-60">
+      <Container className="mb-40">
         {calendarList?.map(({ date, eventCount }) => (
           <CalendarItem key={date} date={date} eventCount={eventCount} />
         ))}

@@ -5,7 +5,7 @@ import { useCoverImage } from "./useCoverImage";
 
 export const CoverImage = bind(useCoverImage, ({ url, loading, error }) => {
   if (loading) {
-    return <Skeleton className="mb-40" width="100%" height={300} />;
+    return <Skeleton className="mb-40" width="100%" height={370} />;
   }
 
   if (error || !url) {
@@ -17,7 +17,6 @@ export const CoverImage = bind(useCoverImage, ({ url, loading, error }) => {
 
 const Container = styled.img`
   width: 100%;
-  height: 300px;
   object-fit: cover;
   object-position: center bottom;
 `;
