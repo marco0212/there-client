@@ -11,7 +11,7 @@ export const IncomingEvents = bind(
     if (loading) {
       return (
         <div className="pb-40">
-          <Skeleton className="mb-20" width={150} height={26} />
+          <Skeleton className="mb-20" width={150} height={24} />
           {new Array(5).fill(null).map((_, index) => (
             <Skeleton
               key={index}
@@ -59,4 +59,5 @@ const Container = styled.ul``;
 
 const ButtonRow = styled.li`
   overflow: hidden;
+  border-radius: 10px;
 `;

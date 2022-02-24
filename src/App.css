@@ -89,3 +89,7 @@ p {
 .pb-60 {
   padding-bottom: 60px;
 }
+
+.display-none {
+  display: none;
+}

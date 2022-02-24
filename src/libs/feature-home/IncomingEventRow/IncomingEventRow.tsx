@@ -28,7 +28,7 @@ export const IncomingEventRow = bind(
           <EventTitle>{title}</EventTitle>
         </Header>
         {isSelected && (
-          <Content className="py-10">
+          <Content>
             <DescriptionInput
               placeholder="이벤트 설명을 적어주세요"
               value={descriptionValue}
@@ -50,8 +50,9 @@ const EventRow = styled.li<{ selected: boolean }>`
   align-items: center;
   margin-bottom: 20px;
   align-items: flex-start;
-  min-height: 0px;
-  transition: min-height 0.3s;
+  transition: height 0.3s;
+  height: 66px;
+  overflow: hidden;
 
   &:hover {
     background-color: rgba(0, 0, 0, 0.02);
@@ -65,7 +66,7 @@ const EventRow = styled.li<{ selected: boolean }>`
     props.selected &&
     css`
       border-color: rgb(200, 200, 200);
-      min-height: 200px;
+      height: 200px;
     `}
 `;
 
@@ -81,7 +82,7 @@ const Content = styled.div`
   flex: 1;
   display: flex;
   flex-direction: column;
-  padding: 0 15px;
+  padding: 0 15px 10px;
 `;
 
 const DayCounter = styled.div<{ highlight?: boolean }>`
@@ -102,6 +103,7 @@ const DescriptionInput = styled.textarea`
   resize: none;
   width: 100%;
   font-size: 14px;
+  line-height: 1.8;
   color: #757575;
   outline: none;
   flex: 1;

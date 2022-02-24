@@ -41,13 +41,17 @@ export function useAddEventModal({ opened, onClose }: UseAddEventModalProps) {
   const [reservedAtValue, setReservedAtValue] = useState("");
   const [descriptionValue, setDescriptionValue] = useState("");
 
+  const closeModal = () => {
+    setTitleValue("");
+    setReservedAtValue("");
+    setDescriptionValue("");
+    onClose?.();
+  };
   const [addEventMutation, { loading }] = useMutation<
     unknown,
     { title: string; reservedAt: string; description?: string }
   >(graphql, {
-    onCompleted: () => {
-      onClose?.();
-    },
+    onCompleted: closeModal,
   });
 
   const addEvent = () => {
@@ -68,7 +72,7 @@ export function useAddEventModal({ opened, onClose }: UseAddEventModalProps) {
   };
   return {
     opened,
-    onClose,
+    closeModal,
     addEvent,
     titleValue,
     setTitleValue,
