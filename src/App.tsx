@@ -5,7 +5,10 @@ import { BrowserRouter } from "react-router-dom";
 import "./App.css";
 
 const client = new ApolloClient({
-  uri: "http://localhost:4000",
+  uri:
+    process.env.NODE_ENV === "production"
+      ? "https://there-server.herokuapp.com"
+      : "http://localhost:4000",
   cache: new InMemoryCache(),
 });
 
