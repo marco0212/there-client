@@ -3,7 +3,7 @@ import { Home } from "../pages";
 
 const ROUTES: RouteProps[] = [{ path: "/", element: <Home /> }];
 
-export default function () {
+export default function Router() {
   return (
     <Routes>
       {ROUTES.map((route) => (

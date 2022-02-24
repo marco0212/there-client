@@ -1,5 +1,4 @@
 import { gql, useQuery } from "@apollo/client";
-import { format } from "date-fns";
 
 const graphql = gql`
   query DaysWithEventsOnWeeklyCalendar {

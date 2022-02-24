@@ -1,7 +1,6 @@
 import {
   CoverImage,
   IncomingEvents,
-  PhotoList,
   WeeklyCalendar,
   DayCounterFromMet,
 } from "../libs/feature-home";

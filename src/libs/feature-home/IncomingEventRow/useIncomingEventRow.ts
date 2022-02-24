@@ -72,7 +72,7 @@ export function useIncomingEventRow({
         variables: { id: event.id, description: descriptionValue },
       });
     }, 500);
-  }, [descriptionValue]);
+  }, [event.id, descriptionValue, updateEventDescriptionMutation]);
 
   return {
     ...event,

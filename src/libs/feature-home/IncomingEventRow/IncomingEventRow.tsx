@@ -1,6 +1,5 @@
 import { differenceInCalendarDays, format, isToday } from "date-fns";
 import styled, { css } from "styled-components";
-import { Body } from "../../shared-ui";
 import { bind } from "../../utils-structure";
 import { useIncomingEventRow } from "./useIncomingEventRow";
 
@@ -107,24 +106,4 @@ const DescriptionInput = styled.textarea`
   outline: none;
   flex: 1;
   background: none;
-`;
-
-const ButtonGroup = styled.div`
-  margin-top: auto;
-`;
-
-const Button = styled.button`
-  border: 0;
-  background: none;
-  font-size: 14px;
-  background-color: #ff851b;
-  color: white;
-  border-radius: 5px;
-  padding: 0 10px;
-  line-height: 30px;
-  margin-right: 10px;
-
-  &:last-child {
-    margin-right: 0;
-  }
 `;
