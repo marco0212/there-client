@@ -4,7 +4,7 @@ import { usePhotoList } from "./usePhotoList";
 
 export const PhotoList = bind(usePhotoList, ({ loading, error, photos }) => {
   if (loading) {
-    return <p>Loading</p>;
+    return null;
   }
 
   if (error || !photos) {

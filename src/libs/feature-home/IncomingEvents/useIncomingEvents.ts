@@ -2,10 +2,14 @@ import { gql, useQuery } from "@apollo/client";
 
 const graphql = gql`
   query EventsOnIncomingEvents {
-    events {
+    there {
       id
-      title
-      reservedAt
+      incomingEvents {
+        id
+        title
+        reservedAt
+        description
+      }
     }
   }
 `;
@@ -17,9 +21,10 @@ type Event = {
 };
 
 export function useIncomingEvents() {
-  const { data, loading, error } = useQuery<{ events: Event[] }>(graphql);
+  const { data, loading, error } =
+    useQuery<{ there: { incomingEvents: Event[] } }>(graphql);
   return {
-    events: data?.events,
+    events: data?.there.incomingEvents,
     loading,
     error,
   };

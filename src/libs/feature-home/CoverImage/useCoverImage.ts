@@ -2,7 +2,10 @@ import { gql, useQuery } from "@apollo/client";
 
 const graphql = gql`
   query CoverImageOnCoverImage {
-    coverImage
+    there {
+      id
+      coverImage
+    }
   }
 `;
 
@@ -12,6 +15,6 @@ export function useCoverImage() {
   return {
     loading,
     error,
-    url: data?.coverImage,
+    url: data?.there.coverImage,
   };
 }

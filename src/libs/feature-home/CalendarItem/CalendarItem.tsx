@@ -12,7 +12,7 @@ export const CalendarItem = bind(
         {date}
       </Date>
       <div>
-        {new Array(eventCount).fill(null).map((_, index) => (
+        {new Array(Math.min(eventCount ?? 0, 3)).fill(null).map((_, index) => (
           <Dot key={index} />
         ))}
       </div>
@@ -36,14 +36,14 @@ const DayOfWeek = styled.span`
 const Date = styled.b<{ isToday: boolean; isPast: boolean }>`
   display: block;
   color: ${(props) => (props.isPast ? "#b3b3b3" : "black")};
-  margin-bottom: 5px;
+  margin-bottom: 8px;
 
   ${(props) =>
     props.isToday &&
     css`
       position: relative;
       color: white;
-      z-index: 1;
+      z-index: 0;
 
       &:after {
         position: absolute;
@@ -55,7 +55,7 @@ const Date = styled.b<{ isToday: boolean; isPast: boolean }>`
         border-radius: 50%;
         background-color: #ffbd84;
         content: "";
-        transform: scale(2);
+        transform: scale(1.7);
         z-index: -1;
       }
     `}
@@ -67,4 +67,9 @@ const Dot = styled.div`
   height: 7px;
   border-radius: 50%;
   background-color: #ff5600;
+  margin-right: 1px;
+
+  &:last-child {
+    margin-right: 0;
+  }
 `;

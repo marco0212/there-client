@@ -1,14 +1,28 @@
-import { differenceInCalendarDays, isToday } from "date-fns";
 import styled from "styled-components";
-import { Title } from "../../shared-ui";
+import { Skeleton, Title } from "../../shared-ui";
 import { bind } from "../../utils-structure";
+import { AddEventButton } from "../AddEventButton";
+import { IncomingEventRow } from "../IncomingEventRow";
 import { useIncomingEvents } from "./useIncomingEvents";
 
 export const IncomingEvents = bind(
   useIncomingEvents,
   ({ events, loading, error }) => {
     if (loading) {
-      return <p>Loading</p>;
+      return (
+        <div className="pb-40">
+          <Skeleton className="mb-20" width={150} height={26} />
+          {new Array(5).fill(null).map((_, index) => (
+            <Skeleton
+              key={index}
+              className="mb-20"
+              width="100%"
+              height={68}
+              radius={10}
+            />
+          ))}
+        </div>
+      );
     }
 
     if (error || !events) {
@@ -17,52 +31,32 @@ export const IncomingEvents = bind(
 
     return (
       <>
-        <Title className="mb-20" level={3} color="black">
-          다가오는 일정
-        </Title>
-        <Container>
+        <Header className="mb-20">
+          <Title level={3} color="black">
+            다가오는 일정
+          </Title>
+        </Header>
+        <Container className="pb-40">
           {events.map((event) => (
-            <EventRow key={event.id}>
-              <DayCounter highlight={isToday(new Date(event.reservedAt))}>
-                D-
-                {differenceInCalendarDays(
-                  new Date(event.reservedAt),
-                  new Date()
-                )}
-              </DayCounter>
-              <EventTitle>{event.title}</EventTitle>
-            </EventRow>
+            <IncomingEventRow key={event.id} event={event} />
           ))}
+          <ButtonRow>
+            <AddEventButton />
+          </ButtonRow>
         </Container>
       </>
     );
   }
 );
 
-const Container = styled.ul`
-  margin-bottom: 40px;
-`;
-
-const EventRow = styled.li`
-  border: 1px solid rgb(229, 229, 229);
-  border-radius: 10px;
-  padding: 20px 15px;
+const Header = styled.div`
   display: flex;
+  justify-content: space-between;
   align-items: center;
-  margin-bottom: 20px;
-
-  &:last-child {
-    margin-bottom: 0;
-  }
 `;
 
-const DayCounter = styled.div<{ highlight?: boolean }>`
-  font-weight: bold;
-  font-size: 16px;
-  color: rgb(0, 0, 0);
-  margin-right: 12px;
-`;
+const Container = styled.ul``;
 
-const EventTitle = styled.p`
-  font-size: 16px;
+const ButtonRow = styled.li`
+  overflow: hidden;
 `;
