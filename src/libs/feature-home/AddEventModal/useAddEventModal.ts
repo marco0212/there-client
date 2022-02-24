@@ -61,13 +61,6 @@ export function useAddEventModal({ opened, onClose }: UseAddEventModalProps) {
         reservedAt: reservedAtValue,
         description: descriptionValue,
       },
-      optimisticResponse: {
-        daysWithEvents: {
-          __typename: "EventInDay",
-          id: reservedAtValue,
-          events: [1, 2, 4],
-        },
-      },
     });
   };
   return {

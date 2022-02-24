@@ -1,6 +1,6 @@
 import { gql, useQuery } from "@apollo/client";
 
-const graphql = gql`
+const queryGraphql = gql`
   query EventsOnIncomingEvents {
     there {
       id
@@ -21,10 +21,13 @@ type Event = {
 };
 
 export function useIncomingEvents() {
-  const { data, loading, error } =
-    useQuery<{ there: { incomingEvents: Event[] } }>(graphql);
+  const {
+    data: queryData,
+    loading,
+    error,
+  } = useQuery<{ there: { incomingEvents: Event[] } }>(queryGraphql);
   return {
-    events: data?.there.incomingEvents,
+    events: queryData?.there.incomingEvents,
     loading,
     error,
   };

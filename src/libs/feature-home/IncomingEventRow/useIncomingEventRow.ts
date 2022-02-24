@@ -1,4 +1,4 @@
-import { gql, useMutation } from "@apollo/client";
+import { gql, useMutation, useSubscription } from "@apollo/client";
 import { useEffect, useRef, useState } from "react";
 
 type Event = {
@@ -12,12 +12,21 @@ type UseIncomingEventRowProps = {
   event: Event;
 };
 
-const graphql = gql`
+const mutationGraphql = gql`
   mutation UpdateEventDescriptionOnIncomingEventRow(
     $id: ID!
     $description: String!
   ) {
     updateEventDescription(id: $id, description: $description) {
+      id
+      description
+    }
+  }
+`;
+
+const subscriptionGraphql = gql`
+  subscription EventDescriptionUpdatedOnIncomingEventRow($id: ID!) {
+    eventDescriptionUpdated(id: $id) {
       id
       description
     }
@@ -35,15 +44,25 @@ export function useIncomingEventRow({
   const [descriptionValue, setDescriptionValue] = useState(
     descriptionProp ?? ""
   );
+
   const debounceRef = useRef<{ timer: NodeJS.Timeout | null; data: string }>({
     timer: null,
     data: descriptionProp ?? "",
   });
 
+  useSubscription(subscriptionGraphql, {
+    variables: { id: event.id },
+    onSubscriptionData({ subscriptionData }) {
+      setDescriptionValue(
+        subscriptionData.data.eventDescriptionUpdated.description
+      );
+    },
+  });
+
   const [updateEventDescriptionMutation] = useMutation<
     MutationResult,
     { id: string; description: string }
-  >(graphql, {
+  >(mutationGraphql, {
     onCompleted(data) {
       debounceRef.current.data = data.updateEventDescription.description;
     },
@@ -59,7 +78,7 @@ export function useIncomingEventRow({
   };
 
   useEffect(() => {
-    if (debounceRef.current.data === descriptionValue) {
+    if (!descriptionValue || debounceRef.current.data === descriptionValue) {
       return;
     }
 
