@@ -12,6 +12,7 @@ import { BrowserRouter } from "react-router-dom";
 import "./App.css";
 import { getMainDefinition } from "@apollo/client/utilities";
 import { GRAPHQL_END_POINT, WS_END_POINT } from "./constants";
+import { TabNavigation } from "./libs/feature-navigation";
 
 const httpLink = new HttpLink({
   uri: GRAPHQL_END_POINT,
@@ -45,6 +46,7 @@ function App() {
     <ApolloProvider client={client}>
       <BrowserRouter>
         <Routes />
+        <TabNavigation />
       </BrowserRouter>
     </ApolloProvider>
   );
