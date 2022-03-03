@@ -38,6 +38,8 @@ const Date = styled.b<{ isToday: boolean; isPast: boolean }>`
   display: block;
   color: ${(props) => (props.isPast ? "#b3b3b3" : "black")};
   margin-bottom: 8px;
+  width: 20px;
+  height: 20px;
 
   ${(props) =>
     props.isToday &&
