@@ -1,18 +1,25 @@
 import plus from "../../shared-ui/Icon/plus-solid.svg";
-import styled from "styled-components";
-import { Spinner } from "../../shared-ui/Spinner";
+import styled, { css } from "styled-components";
+import { Spinner } from "../Spinner";
 
 type PlusButtonProps = {
   color: string;
   onClick?(): void;
   loading?: boolean;
+  full?: boolean;
 };
 
-export const PlusButton = ({ color, onClick, loading }: PlusButtonProps) => {
+export const PlusButton = ({
+  color,
+  onClick,
+  loading,
+  full,
+}: PlusButtonProps) => {
   return (
     <Container
       disabled={loading}
       onClick={onClick}
+      full={full}
       style={{ backgroundColor: color }}
     >
       {loading ? <Spinner /> : <PlusIcon src={plus} />}
@@ -20,10 +27,19 @@ export const PlusButton = ({ color, onClick, loading }: PlusButtonProps) => {
   );
 };
 
-const Container = styled.button`
+const Container = styled.button<{ full?: boolean }>`
+  ${(props) =>
+    props.full
+      ? css`
+          width: 100%;
+        `
+      : css`
+          width: 40px;
+        `}
+
   display: flex;
   background-color: #b3b3b3;
-  width: 100%;
+  border-radius: 10px;
   align-items: center;
   justify-content: center;
   height: 40px;

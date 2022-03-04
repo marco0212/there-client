@@ -57,7 +57,4 @@ const Header = styled.div`
 
 const Container = styled.ul``;
 
-const ButtonRow = styled.li`
-  overflow: hidden;
-  border-radius: 10px;
-`;
+const ButtonRow = styled.li``;
