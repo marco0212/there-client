@@ -1,7 +1,7 @@
 import styled, { keyframes } from "styled-components";
 import ReactDOM from "react-dom";
 import { Title } from "../../shared-ui";
-import { FC, useEffect, useState } from "react";
+import { FC, useCallback, useEffect, useState } from "react";
 
 type OpenerArgs = { openModal(): void };
 type CloserArgs = { closeModal(): void };
@@ -26,14 +26,14 @@ export const Modal: FC<ModalProps> = ({
 }) => {
   const [isOpened, setIsOpened] = useState(false);
 
-  const openModal = () => {
+  const openModal = useCallback(() => {
     setIsOpened(true);
-  };
+  }, [setIsOpened]);
 
-  const closeModal = () => {
+  const closeModal = useCallback(() => {
     onClose?.();
     setIsOpened(false);
-  };
+  }, [onClose, setIsOpened]);
 
   useEffect(() => {
     if (openedProp === undefined) {
@@ -45,7 +45,7 @@ export const Modal: FC<ModalProps> = ({
     } else {
       closeModal();
     }
-  }, [openedProp]);
+  }, [openedProp, openModal, closeModal]);
 
   useEffect(() => {
     if (isOpened) {
