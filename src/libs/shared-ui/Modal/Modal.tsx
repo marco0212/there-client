@@ -110,17 +110,3 @@ const Overlay = styled.div`
   bottom: 0;
   background-color: rgba(0, 0, 0, 0.4);
 `;
-
-const Label = styled.label`
-  display: block;
-`;
-
-const Input = styled.input`
-  width: 100%;
-  font-size: 16px;
-  border: 0;
-  border-bottom: 1px solid #eee;
-  outline: none;
-  padding: 0 0 10px;
-  color: #757575;
-`;

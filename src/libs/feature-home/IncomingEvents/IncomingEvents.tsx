@@ -36,7 +36,7 @@ export const IncomingEvents = bind(
             다가오는 일정
           </Title>
         </Header>
-        <Container className="pb-40">
+        <Container className="pb-30">
           {events.map((event) => (
             <IncomingEventRow key={event.id} event={event} />
           ))}

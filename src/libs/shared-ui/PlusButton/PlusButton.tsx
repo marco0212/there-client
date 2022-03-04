@@ -21,13 +21,14 @@ export const PlusButton = ({
       onClick={onClick}
       full={full}
       style={{ backgroundColor: color }}
+      role="button"
     >
       {loading ? <Spinner /> : <PlusIcon src={plus} />}
     </Container>
   );
 };
 
-const Container = styled.button<{ full?: boolean }>`
+const Container = styled.div<{ disabled?: boolean; full?: boolean }>`
   ${(props) =>
     props.full
       ? css`
@@ -36,6 +37,12 @@ const Container = styled.button<{ full?: boolean }>`
       : css`
           width: 40px;
         `}
+
+  ${(props) =>
+    props.disabled &&
+    css`
+      cursor: not-allowed;
+    `}
 
   display: flex;
   background-color: #b3b3b3;
