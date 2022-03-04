@@ -11,15 +11,15 @@ import Routes from "./routes";
 import { BrowserRouter } from "react-router-dom";
 import "./App.css";
 import { getMainDefinition } from "@apollo/client/utilities";
-import { GRAPHQL_END_POINT, WS_END_POINT } from "./constants";
+import { APOLLO_SERVER_END_POINT, WS_SERVER_END_POINT } from "./constants";
 import { TabNavigation } from "./libs/feature-navigation";
 
 const httpLink = new HttpLink({
-  uri: GRAPHQL_END_POINT,
+  uri: APOLLO_SERVER_END_POINT,
 });
 
 const wsLink = new WebSocketLink({
-  uri: WS_END_POINT,
+  uri: WS_SERVER_END_POINT,
   options: { reconnect: true },
 });
 
@@ -36,7 +36,7 @@ const link = split(
 );
 
 const client = new ApolloClient({
-  uri: GRAPHQL_END_POINT,
+  uri: APOLLO_SERVER_END_POINT,
   cache: new InMemoryCache(),
   link,
 });

@@ -14,7 +14,6 @@ export const Home = () => {
         <WeeklyCalendar />
         <IncomingEvents />
       </div>
-      {/* <PhotoList /> */}
     </>
   );
 };

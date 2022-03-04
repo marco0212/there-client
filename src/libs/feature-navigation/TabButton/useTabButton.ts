@@ -7,7 +7,7 @@ import { useNavigate, useMatch } from "react-router-dom";
 const buttonVariation = {
   home: { icon: houseIcon },
   calendar: { icon: calendarIcon },
-  photos: { icon: imageIcon },
+  photo: { icon: imageIcon },
   setting: { icon: gearIcon },
 };
 

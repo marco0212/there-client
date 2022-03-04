@@ -1,17 +1,15 @@
 import styled from "styled-components";
+import { ROUTE_PATHS } from "../../../constants";
 import { bind } from "../../utils-structure";
 import { TabButton } from "../TabButton";
 import { useTabNavigation } from "./useTabNavigation";
 
-export const TabNavigation = bind(
-  useTabNavigation,
-  ({ moveToHome, moveToPhotos }) => (
-    <Container>
-      <TabButton kind="home" path="/" />
-      <TabButton kind="photos" path="/photos" />
-    </Container>
-  )
-);
+export const TabNavigation = bind(useTabNavigation, () => (
+  <Container>
+    <TabButton kind="home" path={ROUTE_PATHS.home} />
+    <TabButton kind="photo" path={ROUTE_PATHS.posts} />
+  </Container>
+));
 
 const Container = styled.nav`
   background-color: white;

@@ -1,7 +1,11 @@
 import { Route, RouteProps, Routes } from "react-router-dom";
-import { Home } from "../pages";
+import { ROUTE_PATHS } from "../constants";
+import { Home, Posts } from "../pages";
 
-const ROUTES: RouteProps[] = [{ path: "/", element: <Home /> }];
+const ROUTES: RouteProps[] = [
+  { path: ROUTE_PATHS.home, element: <Home /> },
+  { path: ROUTE_PATHS.posts, element: <Posts /> },
+];
 
 export default function Router() {
   return (
