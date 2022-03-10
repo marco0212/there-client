@@ -6,13 +6,21 @@ import { Image } from "../../shared-ui";
 
 export const AddPostModal = bind(
   useAddPostModal,
-  ({ photos, location, setLocation, addPost, loading, resetPhotos }) => (
+  ({
+    photos,
+    location,
+    setLocation,
+    addPost,
+    loading,
+    resetPhotos,
+    photoWidth,
+  }) => (
     <Modal
       title="새 게시물 만들기"
       opened={Boolean(photos.length)}
       onClose={resetPhotos}
     >
-      <PhotoList className="mb-30">
+      <PhotoList className="mb-30" height={photoWidth * 3}>
         {photos.map((photo) => (
           <Photo key={photo} src={photo} ratio="1:1" />
         ))}
@@ -34,12 +42,22 @@ export const AddPostModal = bind(
   )
 );
 
-const PhotoList = styled.div`
+const PhotoList = styled.div<{ height: number }>`
   display: flex;
+  flex-wrap: wrap;
+  overflow-y: scroll;
+  ${(props) => `max-height: ${props.height}px;`}
 `;
 
 const Photo = styled(Image)`
-  flex-basis: 33.333%;
+  width: calc(33.333% - 2px);
+
+  margin-bottom: 3px;
+  margin-right: 3px;
+
+  &:nth-child(3n) {
+    margin-right: 0px;
+  }
 `;
 
 const Label = styled.label`

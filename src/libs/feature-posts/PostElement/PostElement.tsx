@@ -16,4 +16,5 @@ export const PostElement: FC<PostElementProps> = ({ className, post }) => (
 const Container = styled.div`
   position: relative;
   flex: 1;
+  cursor: pointer;
 `;

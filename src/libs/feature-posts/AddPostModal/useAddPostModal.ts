@@ -3,7 +3,7 @@ import { useCallback, useState } from "react";
 import { usePostSceneContext } from "../../provider-posts";
 
 const graphql = gql`
-  mutation AddPostOnAddPostModal($photos: [String], $location: String) {
+  mutation AddPostOnAddPostModal($photos: [String!], $location: String!) {
     addPost(photos: $photos, location: $location) {
       there {
         id
@@ -28,6 +28,11 @@ export function useAddPostModal() {
   >(graphql);
 
   const addPost = async () => {
+    if (location.trim().length === 0) {
+      alert("위치를 입력해주세요");
+      return;
+    }
+
     await addPostMutation({ variables: { photos, location } });
     setPhotos([]);
     setLocation("");
@@ -37,5 +42,15 @@ export function useAddPostModal() {
     setPhotos([]);
   }, [setPhotos]);
 
-  return { photos, loading, addPost, location, setLocation, resetPhotos };
+  const photoWidth = (window.innerWidth - 40) / 3;
+
+  return {
+    photos,
+    loading,
+    addPost,
+    location,
+    setLocation,
+    resetPhotos,
+    photoWidth,
+  };
 }

@@ -21,7 +21,6 @@ const ITEMS_IN_ROW = 3;
 const GRID_GAP = 3;
 
 export function usePostList() {
-  console.log("hello22");
   const { data, loading } = useQuery<{ there: { posts: Post[] } }>(graphql);
 
   const posts = data?.there.posts ?? [];
