@@ -3,3 +3,4 @@ export { Skeleton } from "./Skeleton";
 export { Dot } from "./Dot";
 export { PlusButton } from "./PlusButton";
 export { Modal } from "./Modal";
+export { Image } from "./Image";

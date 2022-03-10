@@ -8,7 +8,7 @@ import {
   split,
 } from "@apollo/client";
 import Routes from "./routes";
-import { BrowserRouter } from "react-router-dom";
+import { HashRouter as Router } from "react-router-dom";
 import "./App.css";
 import { getMainDefinition } from "@apollo/client/utilities";
 import { APOLLO_SERVER_END_POINT, WS_SERVER_END_POINT } from "./constants";
@@ -44,10 +44,10 @@ const client = new ApolloClient({
 function App() {
   return (
     <ApolloProvider client={client}>
-      <BrowserRouter>
+      <Router>
         <Routes />
         <TabNavigation />
-      </BrowserRouter>
+      </Router>
     </ApolloProvider>
   );
 }

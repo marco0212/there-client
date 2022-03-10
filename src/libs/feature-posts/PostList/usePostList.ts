@@ -1,12 +1,30 @@
+import { gql, useQuery } from "@apollo/client";
+
+const graphql = gql`
+  query ThereOnPostList {
+    there {
+      id
+      posts {
+        id
+        photos
+      }
+    }
+  }
+`;
+
 type Post = {
   id: string;
-  url: string;
+  photos: string[];
 };
 
 const ITEMS_IN_ROW = 3;
+const GRID_GAP = 3;
 
 export function usePostList() {
-  const posts: (Post | null)[] = [];
+  console.log("hello22");
+  const { data, loading } = useQuery<{ there: { posts: Post[] } }>(graphql);
+
+  const posts = data?.there.posts ?? [];
 
   const groupedPostList = posts.reduce<(Post | null)[][]>(
     (rows, post, index) => {
@@ -23,5 +41,12 @@ export function usePostList() {
     []
   );
 
-  return { groupedPostList };
+  const containerWidth = Math.min(window.innerWidth, 640);
+
+  return {
+    groupedPostList,
+    loading,
+    gridGap: GRID_GAP,
+    skeletonHeight: containerWidth / ITEMS_IN_ROW - GRID_GAP / 2,
+  };
 }

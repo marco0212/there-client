@@ -3,14 +3,22 @@ import { PlusButton } from "../../shared-ui";
 import { bind } from "../../utils-structure";
 import { useAddPostButton } from "./useAddPostButton";
 
-export const AddPostButton = bind(useAddPostButton, () => (
-  <Container>
-    <Label>
-      <PlusButton color="#ffbd83" />
-      <HideInput type="file" accept="image/*" multiple />
-    </Label>
-  </Container>
-));
+export const AddPostButton = bind(
+  useAddPostButton,
+  ({ selectPhotos, loading }) => (
+    <Container>
+      <Label>
+        <PlusButton color="#ffbd83" loading={loading} />
+        <HideInput
+          type="file"
+          accept="image/*"
+          multiple
+          onChange={selectPhotos}
+        />
+      </Label>
+    </Container>
+  )
+);
 
 const Container = styled.div`
   position: fixed;
