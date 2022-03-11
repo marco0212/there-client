@@ -1,6 +1,7 @@
-import { gql, useQuery } from "@apollo/client";
+import { gql } from "@apollo/client";
+import { useDayCountFromMetOnDayCounterFromMetQuery } from "./__generated__/useDayCounterFromMet";
 
-const graphql = gql`
+gql`
   query DayCountFromMetOnDayCounterFromMet {
     there {
       id
@@ -10,7 +11,7 @@ const graphql = gql`
 `;
 
 export function useDayCounterFromMet() {
-  const { data, loading, error } = useQuery(graphql);
+  const { data, loading, error } = useDayCountFromMetOnDayCounterFromMetQuery();
 
   return { dayCountFromMet: data?.there.dayCountFromMet, loading, error };
 }

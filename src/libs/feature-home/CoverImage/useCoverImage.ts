@@ -1,6 +1,7 @@
-import { gql, useQuery } from "@apollo/client";
+import { gql } from "@apollo/client";
+import { useCoverImageOnCoverImageQuery } from "./__generated__/useCoverImage";
 
-const graphql = gql`
+gql`
   query CoverImageOnCoverImage {
     there {
       id
@@ -10,7 +11,7 @@ const graphql = gql`
 `;
 
 export function useCoverImage() {
-  const { data, loading, error } = useQuery(graphql);
+  const { data, loading, error } = useCoverImageOnCoverImageQuery();
 
   return {
     loading,

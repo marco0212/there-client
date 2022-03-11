@@ -1,35 +1,36 @@
-import { gql, useQuery } from "@apollo/client";
+import { gql } from "@apollo/client";
+import {
+  PostElementFragment,
+  PostElementFragmentDoc,
+} from "../PostElement/__generated__/usePostElement";
+import { useThereOnPostListQuery } from "./__generated__/usePostList";
 
-const graphql = gql`
+gql`
+  ${PostElementFragmentDoc}
   query ThereOnPostList {
     there {
       id
       posts {
-        id
-        photos
+        ...PostElement
       }
     }
   }
 `;
 
-type Post = {
-  id: string;
-  photos: string[];
-};
-
 const ITEMS_IN_ROW = 3;
 const GRID_GAP = 3;
 
 export function usePostList() {
-  const { data, loading } = useQuery<{ there: { posts: Post[] } }>(graphql);
+  const { data, loading } = useThereOnPostListQuery();
 
   const posts = data?.there.posts ?? [];
 
-  const groupedPostList = posts.reduce<(Post | null)[][]>(
+  const groupedPostList = posts.reduce<(PostElementFragment | null)[][]>(
     (rows, post, index) => {
       const remainderOfCountInRow = index % ITEMS_IN_ROW;
       if (remainderOfCountInRow === 0) {
-        const row: (Post | null)[] = Array(ITEMS_IN_ROW).fill(null);
+        const row: (PostElementFragment | null)[] =
+          Array(ITEMS_IN_ROW).fill(null);
         row[0] = post;
         rows.push(row);
       } else {

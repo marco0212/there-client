@@ -1,5 +1,6 @@
-import { gql, useMutation } from "@apollo/client";
+import { gql } from "@apollo/client";
 import { useState } from "react";
+import { useAddEventOnAddEventModalMutation } from "./__generated__/useAddEventButton";
 
 const graphql = gql`
   mutation AddEventOnAddEventModal(
@@ -52,10 +53,7 @@ export function useAddEventButton() {
     setIsOpenModal(false);
   };
 
-  const [addEventMutation, { loading }] = useMutation<
-    unknown,
-    { title: string; reservedAt: string; description?: string }
-  >(graphql, {
+  const [addEventMutation, { loading }] = useAddEventOnAddEventModalMutation({
     onCompleted: closeModal,
   });
 

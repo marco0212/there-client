@@ -1,31 +1,22 @@
-import { gql, useQuery } from "@apollo/client";
+import { gql } from "@apollo/client";
+import { IncomingEventRowFragmentDoc } from "../IncomingEventRow/__generated__/useIncomingEventRow";
+import { useEventsOnIncomingEventsQuery } from "./__generated__/useIncomingEvents";
 
-const queryGraphql = gql`
+gql`
+  ${IncomingEventRowFragmentDoc}
   query EventsOnIncomingEvents {
     there {
       id
       incomingEvents {
         id
-        title
-        reservedAt
-        description
+        ...IncomingEventRow
       }
     }
   }
 `;
 
-type Event = {
-  id: string;
-  title: string;
-  reservedAt: number;
-};
-
 export function useIncomingEvents() {
-  const {
-    data: queryData,
-    loading,
-    error,
-  } = useQuery<{ there: { incomingEvents: Event[] } }>(queryGraphql);
+  const { data: queryData, loading, error } = useEventsOnIncomingEventsQuery();
   return {
     events: queryData?.there.incomingEvents,
     loading,

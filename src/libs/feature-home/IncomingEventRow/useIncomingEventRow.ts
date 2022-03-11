@@ -1,19 +1,24 @@
-import { gql, useMutation, useSubscription } from "@apollo/client";
+import { gql } from "@apollo/client";
 import { useEffect, useRef, useState } from "react";
 import { useCookies } from "react-cookie";
-
-type Event = {
-  id: string;
-  title: string;
-  description?: string;
-  reservedAt: number;
-};
+import {
+  IncomingEventRowFragment,
+  useEventDescriptionUpdatedOnIncomingEventRowSubscription,
+  useUpdateEventDescriptionOnIncomingEventRowMutation,
+} from "./__generated__/useIncomingEventRow";
 
 type UseIncomingEventRowProps = {
-  event: Event;
+  event: IncomingEventRowFragment;
 };
 
-const mutationGraphql = gql`
+gql`
+  fragment IncomingEventRow on Event {
+    id
+    title
+    description
+    reservedAt
+  }
+
   mutation UpdateEventDescriptionOnIncomingEventRow(
     $id: ID!
     $description: String!
@@ -23,9 +28,7 @@ const mutationGraphql = gql`
       description
     }
   }
-`;
 
-const subscriptionGraphql = gql`
   subscription EventDescriptionUpdatedOnIncomingEventRow($id: ID!) {
     eventDescriptionUpdated(id: $id) {
       id
@@ -33,10 +36,6 @@ const subscriptionGraphql = gql`
     }
   }
 `;
-
-type MutationResult = {
-  updateEventDescription: { id: string; description: string };
-};
 
 export function useIncomingEventRow({
   event: { description: descriptionProp, ...event },
@@ -54,29 +53,37 @@ export function useIncomingEventRow({
     data: descriptionProp ?? "",
   });
 
-  const [remoteDescription, setRemoteDescription] = useState(null);
+  const [remoteDescription, setRemoteDescription] = useState<string | null>(
+    null
+  );
 
-  useSubscription(subscriptionGraphql, {
+  useEventDescriptionUpdatedOnIncomingEventRowSubscription({
     variables: { id: event.id },
     onSubscriptionData({ subscriptionData }) {
+      if (!subscriptionData.data?.eventDescriptionUpdated.description) {
+        return;
+      }
+
       setRemoteDescription(
         subscriptionData.data.eventDescriptionUpdated.description
       );
     },
   });
 
-  const [updateEventDescriptionMutation] = useMutation<
-    MutationResult,
-    { id: string; description: string }
-  >(mutationGraphql, {
-    onCompleted(data) {
-      debounceRef.current.data = data.updateEventDescription.description;
-      setCookie(
-        data.updateEventDescription.id,
-        data.updateEventDescription.description
-      );
-    },
-  });
+  const [updateEventDescriptionMutation] =
+    useUpdateEventDescriptionOnIncomingEventRowMutation({
+      onCompleted(data) {
+        if (!data.updateEventDescription.description) {
+          return;
+        }
+
+        debounceRef.current.data = data.updateEventDescription.description;
+        setCookie(
+          data.updateEventDescription.id,
+          data.updateEventDescription.description
+        );
+      },
+    });
 
   const toggleOpenDialog = () => {
     if (!isSelected && isUpdated) {

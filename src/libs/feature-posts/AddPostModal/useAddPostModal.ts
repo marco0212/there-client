@@ -1,9 +1,10 @@
-import { gql, useMutation } from "@apollo/client";
+import { gql } from "@apollo/client";
 import { useCallback, useState } from "react";
 import { usePostSceneContext } from "../../provider-posts";
+import { useAddPostOnAddPostModalMutation } from "./__generated__/useAddPostModal";
 
-const graphql = gql`
-  mutation AddPostOnAddPostModal($photos: [String!], $location: String!) {
+gql`
+  mutation AddPostOnAddPostModal($photos: [String!]!, $location: String!) {
     addPost(photos: $photos, location: $location) {
       there {
         id
@@ -22,10 +23,7 @@ export function useAddPostModal() {
   const { photos, setPhotos } = usePostSceneContext();
   const [location, setLocation] = useState("");
 
-  const [addPostMutation, { loading }] = useMutation<
-    unknown,
-    { photos: string[]; location: string }
-  >(graphql);
+  const [addPostMutation, { loading }] = useAddPostOnAddPostModalMutation();
 
   const addPost = async () => {
     if (location.trim().length === 0) {
