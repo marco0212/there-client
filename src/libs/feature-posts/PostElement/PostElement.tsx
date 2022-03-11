@@ -1,6 +1,5 @@
 import styled from "styled-components";
 import { Image } from "../../shared-ui";
-import { FC } from "react";
 import { bind } from "../../utils-structure";
 import { usePostElement } from "./usePostElement";
 

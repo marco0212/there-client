@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { PlusButton } from "../../shared-ui";
+import { Button } from "../../shared-ui";
 import { bind } from "../../utils-structure";
 import { useAddPostButton } from "./useAddPostButton";
 
@@ -8,7 +8,7 @@ export const AddPostButton = bind(
   ({ selectPhotos, loading }) => (
     <Container>
       <Label>
-        <PlusButton color="#ffbd83" loading={loading} />
+        <Button type="plus" color="#ffbd83" loading={loading} />
         <HideInput
           type="file"
           accept="image/*"

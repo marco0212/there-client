@@ -1,9 +1,15 @@
+import { FC } from "react";
 import styled, { keyframes } from "styled-components";
 import spinner from "../../shared-ui/Icon/spinner.svg";
 
-export const Spinner = () => (
-  <Container>
-    <SpinnerIcon src={spinner} />
+type SpinnerProps = {
+  size?: number;
+  className?: string;
+};
+
+export const Spinner: FC<SpinnerProps> = ({ className, size = 20 }) => (
+  <Container className={className}>
+    <SpinnerIcon src={spinner} size={size} />
   </Container>
 );
 
@@ -21,10 +27,9 @@ const Container = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  display: inline-block;
-  animation: ${rotate} 1.5s infinite;
 `;
 
-const SpinnerIcon = styled.img`
-  width: 20px;
+const SpinnerIcon = styled.img<{ size: number }>`
+  ${(props) => `width: ${props.size}px;`}
+  animation: ${rotate} 1.5s infinite;
 `;

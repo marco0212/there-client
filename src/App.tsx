@@ -12,7 +12,18 @@ import { HashRouter as Router } from "react-router-dom";
 import "./App.css";
 import { getMainDefinition } from "@apollo/client/utilities";
 import { APOLLO_SERVER_END_POINT, WS_SERVER_END_POINT } from "./constants";
-import { TabNavigation } from "./libs/feature-navigation";
+import { setContext } from "@apollo/link-context";
+import { AccountProvider } from "./libs/provider-account";
+
+const authLink = setContext((_, { headers }) => {
+  const token = localStorage.getItem("token");
+  return {
+    headers: {
+      ...headers,
+      authorization: token ? `Bearer ${token}` : "",
+    },
+  };
+});
 
 const httpLink = new HttpLink({
   uri: APOLLO_SERVER_END_POINT,
@@ -38,16 +49,18 @@ const link = split(
 const client = new ApolloClient({
   uri: APOLLO_SERVER_END_POINT,
   cache: new InMemoryCache(),
-  link,
+  credentials: "include",
+  link: authLink.concat(link),
 });
 
 function App() {
   return (
     <ApolloProvider client={client}>
-      <Router>
-        <Routes />
-        <TabNavigation />
-      </Router>
+      <AccountProvider>
+        <Router>
+          <Routes />
+        </Router>
+      </AccountProvider>
     </ApolloProvider>
   );
 }

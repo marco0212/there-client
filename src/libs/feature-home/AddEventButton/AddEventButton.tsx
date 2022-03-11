@@ -1,5 +1,5 @@
 import { bind } from "../../utils-structure";
-import { Modal, PlusButton, Title } from "../../shared-ui";
+import { Modal, Button, Title } from "../../shared-ui";
 import { useAddEventButton } from "./useAddEventButton";
 import styled from "styled-components";
 
@@ -20,7 +20,7 @@ export const AddEventButton = bind(
   }) => {
     return (
       <>
-        <PlusButton color="#b3b3b3" onClick={openModal} full />
+        <Button type="plus" color="#b3b3b3" onClick={openModal} full />
         <Modal
           title="새로운 일정 등록하기"
           opened={isOpenModal}
@@ -60,7 +60,8 @@ export const AddEventButton = bind(
               />
             </Label>
 
-            <PlusButton
+            <Button
+              type="plus"
               color="#ff9b44"
               onClick={addEvent}
               loading={loading}

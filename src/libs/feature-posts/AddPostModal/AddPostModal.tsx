@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { Modal, PlusButton, Title } from "../../shared-ui";
+import { Modal, Button, Title } from "../../shared-ui";
 import { bind } from "../../utils-structure";
 import { useAddPostModal } from "./useAddPostModal";
 import { Image } from "../../shared-ui";
@@ -37,7 +37,13 @@ export const AddPostModal = bind(
         />
       </Label>
 
-      <PlusButton color="#ff9b44" onClick={addPost} loading={loading} full />
+      <Button
+        type="plus"
+        color="#ff9b44"
+        onClick={addPost}
+        loading={loading}
+        full
+      />
     </Modal>
   )
 );

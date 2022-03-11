@@ -2,7 +2,7 @@ import { gql } from "@apollo/client";
 import { useState } from "react";
 import { useAddEventOnAddEventModalMutation } from "./__generated__/useAddEventButton";
 
-const graphql = gql`
+gql`
   mutation AddEventOnAddEventModal(
     $title: String!
     $reservedAt: Date!
@@ -37,7 +37,6 @@ export function useAddEventButton() {
   const [titleValue, setTitleValue] = useState("");
   const [reservedAtValue, setReservedAtValue] = useState("");
   const [descriptionValue, setDescriptionValue] = useState("");
-
   const initializeInput = () => {
     setTitleValue("");
     setReservedAtValue("");

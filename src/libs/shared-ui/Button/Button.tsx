@@ -1,20 +1,29 @@
 import plus from "../../shared-ui/Icon/plus-solid.svg";
+import doorOpen from "../../shared-ui/Icon/door-open-solid.svg";
 import styled, { css } from "styled-components";
 import { Spinner } from "../Spinner";
 
-type PlusButtonProps = {
+type ButtonProps = {
+  type: keyof typeof iconMap;
   color: string;
   onClick?(): void;
   loading?: boolean;
   full?: boolean;
 };
 
-export const PlusButton = ({
+const iconMap = {
+  "door-open": doorOpen,
+  plus: plus,
+};
+
+export const Button = ({
+  type,
   color,
   onClick,
   loading,
   full,
-}: PlusButtonProps) => {
+}: ButtonProps) => {
+  const icon = iconMap[type];
   return (
     <Container
       disabled={loading}
@@ -23,7 +32,7 @@ export const PlusButton = ({
       style={{ backgroundColor: color }}
       role="button"
     >
-      {loading ? <Spinner /> : <PlusIcon src={plus} />}
+      {loading ? <Spinner /> : <Icon src={icon} />}
     </Container>
   );
 };
@@ -59,6 +68,6 @@ const Container = styled.div<{ disabled?: boolean; full?: boolean }>`
   }
 `;
 
-const PlusIcon = styled.img`
+const Icon = styled.img`
   width: 18px;
 `;
